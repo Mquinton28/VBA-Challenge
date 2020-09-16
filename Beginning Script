@@ -1,0 +1,34 @@
+Sub TickerSymbol()
+' Define variables
+Dim ticker As String
+Dim stockdate As Long
+Dim opennumber As Double
+Dim highnumber As Double
+Dim lownumber As Double
+Dim closenumber As Double
+Dim volnumber As Long
+Dim yearlychange As Double
+Dim percentchange As Double
+Dim summarytable As Integer
+
+ticker = Range("A:A").Value
+stockdate = Range("B:B").Value
+opennumber = Range("C:C").Value
+highnumber = Range("D:D").Value
+lownumber = Range("E:E").Value
+closenumber = Range("F;F").Value
+volnumber = Range("G:G").Value
+
+
+'Create loop to output ticker symbol
+Dim i As String
+
+For i = 2 To 70926
+ 
+ If Cells(i + 1, 1).Value <> Cells(i, 1).Value Then
+ 
+ 
+ 
+ 
+End If
+ Next i••••ˇˇˇˇ
