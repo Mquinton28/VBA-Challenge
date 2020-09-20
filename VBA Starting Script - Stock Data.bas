@@ -1,4 +1,28 @@
 Attribute VB_Name = "Module1"
+Sub TickerTotal()
+'define variables
+Dim tickerArray() As Variant
+Dim Rg As Range
+
+'Set arrays
+tickerArray = Range("A1:A70926")
+
+'Print Values
+Range("I1:I70926") = tickerArray
+
+'Set Range
+
+Set Rg = Range("I1:I70926").CurrentRegion
+
+'Remove Duplicates
+
+Rg.RemoveDuplicates Columns:=1, Header:=xlYes
+Erase tickerArray()
+
+Dim Full_Ticker_Array() As Variant
+Full_Ticker_Array = Range("A1:A70926")
+
+End Sub
 Sub StockData()
 'Define Variables
 Dim i As Integer
@@ -22,12 +46,13 @@ Dim Summary_Table_Row As Integer
 Summary_Table_Row = 2
 
 'For Loop
-For i = 2 To lastrow
+For i = 2 To 70926
 If Cells(i + 1, 1).Value <> Cells(i, 1).Value Then
     Ticker = Cells(i, 1).Value
 
     
     Range("I" & Summary_Table_Row).Value = Ticker
+    Range("
     
     End If
 
