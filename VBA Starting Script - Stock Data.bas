@@ -1,5 +1,6 @@
 Attribute VB_Name = "Module1"
-Sub TickerTotal()
+Sub TickerData()
+
 'define variables
 Dim tickerArray() As Variant
 Dim Rg As Range
@@ -17,45 +18,65 @@ Set Rg = Range("I1:I70926").CurrentRegion
 'Remove Duplicates
 
 Rg.RemoveDuplicates Columns:=1, Header:=xlYes
-Erase tickerArray()
+
+'Erase Ticker
 
 Dim Full_Ticker_Array() As Variant
 Full_Ticker_Array = Range("A1:A70926")
-
 End Sub
-Sub StockData()
-'Define Variables
-Dim i As Integer
-Dim j As Integer
+
+Sub TickerLoop()
+'define variables
+Dim TickerSymbol As String
+Dim TickerTotal As Long
 Dim lastrow As Long
-Dim Ticker As String
-Dim OpenDate As Double
-Dim CloseDate As Double
-Dim YearlyChanged As Double
-Dim PercentageChanges As Double
-Dim TotalStockVol As Long
+Dim Yearlychange As Long
+Dim PercentageChanged As Long
+Dim OpenPrice As Long
+Dim ClosePrice As Long
+Dim close_open As Long
 
-'Locate Variables
-Ticker = Cells(2, 1).Value
-lastrow = Range("A1").End(xlDown).Row
-OpenDate = Range("C1").End(xlDown).Row
-CloseDate = Range("F1").End(xlDown).Row
 
-'Store summary table
-Dim Summary_Table_Row As Integer
-Summary_Table_Row = 2
+'Print summary table
+Cells(1, 11).Value = "Percentage_Change"
+Cells(1, 12).Value = "Total Stock Volume"
+Cells(3, 14).Value = "Greatest % Increase"
+Cells(4, 14).Value = "Greatest % Decrease"
+Cells(5, 14).Value = "Greatest Total Volume"
+
+'calculating
+Yearlychange = ClosePrice - OpenPrice
+PercentageChange = close_open - OpenPrice
+
+TickerTotal = 0
+Dim summary_table_row As Long
+summary_table_row = 2
 
 'For Loop
-For i = 2 To 70926
-If Cells(i + 1, 1).Value <> Cells(i, 1).Value Then
-    Ticker = Cells(i, 1).Value
-
+For i = 2 To 70927
+    If Cells(i + 1, 1).Value <> Cells(i, 1).Value Then
+    TickerSymbol = Cells(i, 1).Value
+    OpenPrice = Cells(i + 1, 3).Value
     
-    Range("I" & Summary_Table_Row).Value = Ticker
-    Range("
+    ClosePrice = Cells(i, 6).Value
+    TickerTotal = TickerTotal + Cells(i, 7).Value
     
-    End If
+    close_open = ClosePrice - OpenPrice
+    PercentageChanged = close_open / ClosePrice
+ElseIf Cells(i + 1, 1).Value = Cells(i, 1).Value Then
+OpenPrice = Cells(i, 3).Value
 
+Range("I" & summary_table_row).Value = TickerSymbol
+Range("L" & summary_table_row).Value = TickerTotal
+Range("J" & summary_table_row).Value = close_open
+Range("K" & summary_table_row).Value = PercentageChange
+Range("N" & summary_table_row).Value = OpenPrice
+Range("O" & summary_table_row).Value = ClosePrice
+summary_table_row = summary_table_row + 1
+
+TickerTotal = 0
+End If
 
 Next i
+
 End Sub
